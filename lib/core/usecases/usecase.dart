@@ -1,7 +1,10 @@
-import 'package:clean_architecture_app/core/error/failures.dart';
-import 'package:clean_architecture_app/features/random_images/domain/entities/random_image.dart';
-import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class UseCase<Type> {
-  Future<Either<Failure, RandomImage?>> call();
+abstract class UseCase<Type, Params> {
+  Future<Type> call(Params params);
+}
+
+class NoParams extends Equatable {
+  @override
+  List<Object> get props => [];
 }

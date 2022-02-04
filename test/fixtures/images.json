@@ -1,6 +1,0 @@
-{
-  "provider": "unsplash",
-  "license": "CC0",
-  "terms": "https://unsplash.com/terms",
-  "url": "https://random.imagecdn.app/v1/image?width=500&height=300&category=buildings&format=json"
-}
