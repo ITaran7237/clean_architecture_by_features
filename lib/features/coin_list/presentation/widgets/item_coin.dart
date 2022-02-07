@@ -15,9 +15,7 @@ class ItemCoin extends StatelessWidget {
       height: 80,
       child: InkWell(
         onTap: () => NavigationManager.navigateToCoinDetailsScreen(context, coinData),
-        child: Center(
-          child: Row(children: getCoinList(context)),
-        ),
+        child: Center(child: Row(children: getCoinList(context))),
       ),
     );
   }

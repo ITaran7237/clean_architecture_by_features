@@ -2,4 +2,6 @@ import 'package:clean_architecture_app/features/coin_list/data/models/coins_resp
 
 abstract class CoinsRepository {
   Future<CoinsResponse> getCoinList();
+
+  Future<dynamic> saveCoinsData(CoinsResponse coinsResponse);
 }

@@ -15,21 +15,27 @@ class CoinListPage extends StatelessWidget {
   BlocProvider<CoinsCubit> buildBody(BuildContext context) {
     return BlocProvider(
         create: (_) => serviceLocator<CoinsCubit>(),
-        child: LayoutBuilder(builder: (context, constraints) {
-          return BlocConsumer<CoinsCubit, CoinsState>(
-              listener: (context, state) {},
-              builder: ((context, state) {
-                if (state is CoinsInitialState || state is ErrorState) {
-                  return _buildListView([]);
-                } else if (state is LoadingState) {
-                  return LoadingWidget();
-                } else if (state is OnOnGotCoinsDataState) {
-                  return _buildListView(state.coinsData.data ?? []);
-                } else {
-                  return Container();
-                }
-              }));
-        }));
+        child: SafeArea(
+          child: LayoutBuilder(builder: (context, constraints) {
+            return BlocConsumer<CoinsCubit, CoinsState>(
+                listener: (context, state) {
+                  if(state is ErrorState){
+                    _showSnackBar(context, state.message, isError: true);
+                  }
+                },
+                builder: ((context, state) {
+                  if (state is CoinsInitialState) {
+                    return _buildListView([]);
+                  } else if (state is LoadingState) {
+                    return LoadingWidget();
+                  } else if (state is OnOnGotCoinsDataState) {
+                    return _buildListView(state.coinsData.data ?? []);
+                  } else {
+                    return Container();
+                  }
+                }));
+          }),
+        ));
   }
 
   Widget _buildListView(List<Data> list) {
@@ -38,5 +44,14 @@ class CoinListPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return ItemCoin(list[index]);
         });
+  }
+
+  _showSnackBar(BuildContext context, String text, {bool isError = false}) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+          backgroundColor: isError ? Colors.red : Colors.green,
+          content: Text(text)),
+    );
   }
 }

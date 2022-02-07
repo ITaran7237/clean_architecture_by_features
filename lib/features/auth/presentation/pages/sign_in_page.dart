@@ -21,22 +21,25 @@ class SignInPage extends StatelessWidget {
     _passwordTextController.text = "123456";
     return BlocProvider(
         create: (_) => serviceLocator<AuthCubit>(),
-        child: LayoutBuilder(builder: (context, constraints) {
-          return BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
-            if (state is OnSuccessLoginState) {
-              _showSnackBar(context, 'Successful authorization');
-              NavigationManager.navigateToCoinListScreen(context);
-            }
-          }, builder: ((context, state) {
-            if (state is AuthInitialState || state is ErrorState) {
-              return buildAnimatedContainer(context, constraints, state);
-            } else if (state is LoadingState) {
-              return LoadingWidget();
-            } else {
-              return Container();
-            }
-          }));
-        }));
+        child: SafeArea(
+          child: LayoutBuilder(builder: (context, constraints) {
+            return BlocConsumer<AuthCubit, AuthState>(
+                listener: (context, state) {
+              if (state is OnSuccessLoginState) {
+                _showSnackBar(context, 'Successful authorization');
+                NavigationManager.navigateToCoinListScreen(context);
+              }
+            }, builder: ((context, state) {
+              if (state is AuthInitialState || state is ErrorState) {
+                return buildAnimatedContainer(context, constraints, state);
+              } else if (state is LoadingState) {
+                return LoadingWidget();
+              } else {
+                return Container();
+              }
+            }));
+          }),
+        ));
   }
 
   AnimatedContainer buildAnimatedContainer(

@@ -4,7 +4,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter_web_plugins:
@@ -15,17 +15,18 @@ dependencies:
   http: ^0.13.3
   firebase_core: ^1.11.0
   shared_preferences: ^2.0.7
+  cross_connectivity: ^3.0.3
   cupertino_icons: ^1.0.4
   url_strategy: ^0.2.0
   firebase_auth: ^3.3.6
   hive: ^2.0.5
+  hive_generator: ^1.1.2
   hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0
-  hive_generator: ^1.1.2
   build_runner: ^2.1.2
 
 flutter:
