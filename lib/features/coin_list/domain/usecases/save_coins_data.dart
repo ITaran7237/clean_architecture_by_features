@@ -1,7 +1,8 @@
 import 'package:clean_architecture_app/core/usecases/usecase.dart';
-import 'package:clean_architecture_app/features/coin_list/data/models/coins_response.dart';
 import 'package:clean_architecture_app/features/coin_list/domain/repositories/coins_repository.dart';
 import 'package:equatable/equatable.dart';
+
+import '../entities/crypto_coins.dart';
 
 class SaveCoinsData implements UseCase<dynamic, CoinsParams> {
   final CoinsRepository repository;
@@ -10,14 +11,14 @@ class SaveCoinsData implements UseCase<dynamic, CoinsParams> {
 
   @override
   Future<dynamic> call(CoinsParams params) async =>
-      await repository.saveCoinsData(params.coinsResponse);
+      await repository.saveCoinsData(params.cryptoCoins);
 }
 
 class CoinsParams extends Equatable {
-  final CoinsResponse coinsResponse;
+  final CryptoCoins cryptoCoins;
 
-  CoinsParams({required this.coinsResponse});
+  CoinsParams({required this.cryptoCoins});
 
   @override
-  List<Object> get props => [coinsResponse];
+  List<Object> get props => [cryptoCoins];
 }

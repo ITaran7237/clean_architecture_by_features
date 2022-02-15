@@ -1,11 +1,11 @@
-import 'package:clean_architecture_app/features/coin_list/data/models/coins_response.dart';
 import 'package:flutter/material.dart';
+import '../../features/coin_list/domain/entities/crypto_coins_data.dart';
 
 const String ROOT_SCREEN = "/";
-const String SIGN_IN_SCREEN = "/SignInScreen";
-const String SIGN_UP_SCREEN = "/SignUpScreen";
-const String COIN_LIST_SCREEN = "/CoinListScreen";
-const String COIN_DETAILS_SCREEN = "/CoinDetailsScreen";
+const String SIGN_IN_SCREEN = "/sign-in";
+const String SIGN_UP_SCREEN = "/sign-up";
+const String COIN_LIST_SCREEN = "/coin-list";
+const String COIN_DETAILS_SCREEN = "/coin-details";
 
 class NavigationManager {
   static void goBack(BuildContext context) {
@@ -28,7 +28,7 @@ class NavigationManager {
         context, COIN_LIST_SCREEN, (Route<dynamic> route) => false);
   }
 
-  static void navigateToCoinDetailsScreen(BuildContext context, Data? data) {
+  static void navigateToCoinDetailsScreen(BuildContext context, CryptoCoinsData? data) {
     Navigator.pushNamed(context, COIN_DETAILS_SCREEN, arguments: data);
   }
 }

@@ -1,7 +1,7 @@
-import 'package:clean_architecture_app/features/coin_list/data/models/coins_response.dart';
+import '../entities/crypto_coins.dart';
 
 abstract class CoinsRepository {
-  Future<CoinsResponse> getCoinList();
+  Future<CryptoCoins> getCoinList();
 
-  Future<dynamic> saveCoinsData(CoinsResponse coinsResponse);
+  Future<dynamic> saveCoinsData(CryptoCoins coinsResponse);
 }

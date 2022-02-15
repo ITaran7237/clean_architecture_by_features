@@ -1,12 +1,14 @@
-import 'package:clean_architecture_app/features/coin_list/data/models/coins_response.dart';
 import 'package:clean_architecture_app/utils/navigation/navigation_manager.dart';
 import 'package:flutter/material.dart';
+import '../../domain/entities/crypto_coins_data.dart';
 import 'custom_list_item.dart';
 
 class ItemCoin extends StatelessWidget {
-  final Data coinData;
+  final CryptoCoinsData? _coinData;
+  final bool _isLargeScreen;
+  final Function(CryptoCoinsData?) callback;
 
-  ItemCoin(this.coinData);
+  ItemCoin(this._coinData, this._isLargeScreen, this.callback);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,12 @@ class ItemCoin extends StatelessWidget {
       shadowColor: Color.fromRGBO(161, 190, 213, 0.29),
       height: 80,
       child: InkWell(
-        onTap: () => NavigationManager.navigateToCoinDetailsScreen(context, coinData),
+        onTap: () {
+          _isLargeScreen
+              ? callback(_coinData)
+              : NavigationManager.navigateToCoinDetailsScreen(
+                  context, _coinData);
+        },
         child: Center(child: Row(children: getCoinList(context))),
       ),
     );
@@ -27,19 +34,19 @@ class ItemCoin extends StatelessWidget {
           flex: 3,
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Text(coinData.coinInfo?.name ?? '',
+            child: Text(_coinData?.coinInfo?.name ?? '',
                 maxLines: 2,
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24)),
           )),
     );
 
     widgetList.add(
-      Expanded(flex: 3, child: Text(coinData.coinInfo?.fullName ?? '')),
+      Expanded(flex: 3, child: Text(_coinData?.coinInfo?.fullName ?? '')),
     );
 
     widgetList.add(Expanded(
         flex: 3,
-        child: Text(coinData.display?.usd?.price ?? '',
+        child: Text(_coinData?.display?.usd?.price ?? '',
             style: TextStyle(fontSize: 18, color: Colors.green))));
 
     widgetList.add(Expanded(

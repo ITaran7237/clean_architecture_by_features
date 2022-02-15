@@ -9,7 +9,7 @@ class CoinsInitialState extends CoinsState {}
 class LoadingState extends CoinsState {}
 
 class OnOnGotCoinsDataState extends CoinsState {
-  final CoinsResponse coinsData;
+  final CryptoCoins coinsData;
 
   OnOnGotCoinsDataState(this.coinsData);
 }

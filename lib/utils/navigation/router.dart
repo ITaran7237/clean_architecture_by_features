@@ -1,10 +1,10 @@
 import 'package:clean_architecture_app/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:clean_architecture_app/features/auth/presentation/pages/sign_up_page.dart';
-import 'package:clean_architecture_app/features/coin_list/data/models/coins_response.dart';
 import 'package:clean_architecture_app/features/coin_list/presentation/pages/coin_details_page.dart';
 import 'package:clean_architecture_app/features/coin_list/presentation/pages/coin_list_page.dart';
 import 'package:clean_architecture_app/features/root.dart';
 import 'package:flutter/material.dart';
+import '../../features/coin_list/domain/entities/crypto_coins_data.dart';
 import 'navigation_manager.dart';
 import 'transparent_route.dart';
 
@@ -29,7 +29,7 @@ class SigiRouter {
         return TransparentRoute(
             settings: RouteSettings(name: COIN_DETAILS_SCREEN),
             builder: (BuildContext context) {
-              return CoinDetailsPage(settings.arguments as Data);
+              return CoinDetailsPage(settings.arguments as CryptoCoinsData?);
             });
 
       case SIGN_IN_SCREEN:

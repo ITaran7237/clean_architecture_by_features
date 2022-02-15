@@ -1,12 +1,12 @@
 import 'package:clean_architecture_app/features/auth/presentation/widgets/loading_widget.dart';
-import 'package:clean_architecture_app/features/coin_list/data/models/coins_response.dart';
 import 'package:clean_architecture_app/features/coin_list/presentation/cubit/coins_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:clean_architecture_app/locator.dart';
+import '../../domain/entities/crypto_coins_data.dart';
 
 class CoinDetailsPage extends StatelessWidget {
-  final Data? data;
+  final CryptoCoinsData? data;
 
   CoinDetailsPage(this.data);
 
@@ -25,18 +25,24 @@ class CoinDetailsPage extends StatelessWidget {
                 builder: ((context, state) {
                   if (state is LoadingState) {
                     return LoadingWidget();
+                  } else if (state is CoinsInitialState) {
+                    return _buildStack(context);
                   } else if (state is OnOnGotCoinsDataState) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: SingleChildScrollView(
-                          child: Column(children: _buildCoinDetails())),
-                    );
+                    return _buildStack(context);
                   } else {
                     return Container();
                   }
                 }));
           }),
         ));
+  }
+
+  Widget _buildStack(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child:
+          SingleChildScrollView(child: Column(children: _buildCoinDetails())),
+    );
   }
 
   List<Widget> _buildCoinDetails() {
@@ -51,12 +57,9 @@ class CoinDetailsPage extends StatelessWidget {
         .add(_getTextWithData('Last volume: ', data?.display?.usd?.lastVolume));
     widgetList.add(
         _getTextWithData('Last volume to: ', data?.display?.usd?.lastVolumeTo));
-    widgetList.add(
-        _getTextWithData('Open day: ', data?.display?.usd?.openDay.toString()));
-    widgetList.add(
-        _getTextWithData('High day: ', data?.display?.usd?.highDay.toString()));
-    widgetList.add(
-        _getTextWithData('Low day: ', data?.display?.usd?.lowDay.toString()));
+    widgetList.add(_getTextWithData('Open day: ', data?.display?.usd?.openDay));
+    widgetList.add(_getTextWithData('High day: ', data?.display?.usd?.highDay));
+    widgetList.add(_getTextWithData('Low day: ', data?.display?.usd?.lowDay));
     widgetList.add(
         _getTextWithData('Open 24 hour: ', data?.display?.usd?.open24hour));
     widgetList.add(

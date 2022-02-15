@@ -1,11 +1,9 @@
-import 'package:clean_architecture_app/utils/constants/constants.dart';
 import 'package:cross_connectivity/cross_connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'core/database/coins_database.dart';
 import 'core/network/network_info.dart';
 import 'features/auth/data/datasources/auth_data_source.dart';
 import 'features/auth/data/datasources/auth_local_data_source.dart';
@@ -55,19 +53,21 @@ Future init() async {
   serviceLocator.registerLazySingleton<AuthLocalDataSource>(
       () => AuthLocalDataSourceImpl(sharedPreferences: serviceLocator()));
   serviceLocator.registerLazySingleton<CoinsDataSource>(
-      () => CoinsDataSourceImpl(client: serviceLocator()));
+      () => CoinsDataSourceImpl(client: serviceLocator(), database: serviceLocator()));
   serviceLocator.registerLazySingleton<CoinsLocalDataSource>(
-      () => CoinsLocalDataSourceImpl(box: serviceLocator()));
+      () => CoinsLocalDataSourceImpl(database: serviceLocator()));
 
   // Core
-  serviceLocator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(serviceLocator()));
+  serviceLocator.registerLazySingleton<NetworkInfo>(
+      () => NetworkInfoImpl(serviceLocator()));
+
+  //Database
+  serviceLocator.registerLazySingleton<Database>(() => constructDb());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
-  final box = await Hive.openBox<dynamic>(COINS_BOX);
   serviceLocator.registerLazySingleton(() => sharedPreferences);
   serviceLocator.registerLazySingleton(() => http.Client());
   serviceLocator.registerLazySingleton(() => FirebaseAuth.instance);
-  serviceLocator.registerLazySingleton(() => box);
   serviceLocator.registerLazySingleton(() => Connectivity());
 }
