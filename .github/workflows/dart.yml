@@ -2,10 +2,10 @@ name: CI
 on:
   push:
     branches:
-      - app_pdp_winter_2022
+      - master
   pull_request:
     branches:
-      - app_pdp_winter_2022
+      - master
 
 jobs:
   flutter_test:
