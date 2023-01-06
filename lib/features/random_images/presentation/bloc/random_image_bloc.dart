@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:clean_architecture_app/core/error/failures.dart';
 import 'package:clean_architecture_app/features/random_images/domain/entities/random_image.dart';
 import 'package:clean_architecture_app/features/random_images/domain/usecases/get_random_image.dart';
-import 'package:clean_architecture_app/locator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

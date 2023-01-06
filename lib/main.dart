@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
         title: 'Image Collection',
         theme: ThemeData(
           primaryColor: Colors.red.shade800,
-          accentColor: Colors.red.shade600,
         ),
         home: RandomImagePage());
   }
